@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         Automate CookieClicker
-// @namespace    https://luzifer.io/
-// @version      0.1
-// @description  Automate everything!
-// @author       Knut Ahlers <knut@ahlers.me>
-// @match        http://orteil.dashnet.org/cookieclicker/
-// @run-at       document-start
-// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
+// @name            Automate CookieClicker
+// @namespace       https://luzifer.io/
+// @version         0.1.1
+// @description     Automate everything!
+// @author          Knut Ahlers <knut@ahlers.me>
+// @match           http://orteil.dashnet.org/cookieclicker/
+// @run-at          document-start
+// @require         https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
+// @updateURL       https://gist.github.com/Luzifer/706ea5db3e0a65f1dd142d7afa3aecb0/raw/autocookieclicker.user.js
 // ==/UserScript==
 
 function autoClick() { $('#bigCookie').click(); }
