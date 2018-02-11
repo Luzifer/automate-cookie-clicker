@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            Automate CookieClicker
 // @namespace       https://luzifer.io/
-// @version         0.1.1
+// @version         0.2.1
 // @description     Automate everything!
 // @author          Knut Ahlers <knut@ahlers.me>
 // @match           http://orteil.dashnet.org/cookieclicker/
