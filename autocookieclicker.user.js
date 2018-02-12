@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.5.0
+// @version       0.5.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -42,9 +42,11 @@ function autoPurchaseUpgrades() {
 
 function checkCPS() {
   let cps = parseInt($('#cookies').children('div').text().split(': ')[1]);
-  if (cps < 3000 && window.autoClicker == undefined) {
-    window.autoClicker = window.setInterval(autoClick, 1);
-  } else {
+  if (cps == 0) {
+    if (window.autoClicker == undefined) {
+      window.autoClicker = window.setInterval(autoClick, 1);
+    }
+  } else if (cps > 3000) {
     if (window.autoClicker != undefined) {
       window.clearInterval(window.autoClicker);
       window.autoClicker = undefined;
