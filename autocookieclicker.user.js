@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.4.0
+// @version       0.5.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -40,6 +40,18 @@ function autoPurchaseUpgrades() {
   }
 }
 
+function checkCPS() {
+  let cps = parseInt($('#cookies').children('div').text().split(': ')[1]);
+  if (cps < 3000 && window.autoClicker == undefined) {
+    window.autoClicker = window.setInterval(autoClick, 1);
+  } else {
+    if (window.autoClicker != undefined) {
+      window.clearInterval(window.autoClicker);
+      window.autoClicker = undefined;
+    }
+  }
+}
+
 function debug(msg) {
   console.log("[AutoCookieClicker] " + msg);
 }
@@ -66,10 +78,7 @@ function debug(msg) {
     "hideMethod": "fadeOut"
   };
 
-  let cps = parseInt($('#cookies').children('div').text().split(': ')[1]);
-  if (cps == 0) {
-    window.autoClicker = window.setInterval(autoClick, 1);
-  }
+  window.checkCPS = window.setInterval(checkCPS, 1000);
 
   // Enable automatic purchasing of upgrades / elements
   window.autoPurchase = window.setInterval(autoPurchaseUpgrades, 500);
