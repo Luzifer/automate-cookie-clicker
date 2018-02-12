@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.3.0
+// @version       0.4.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -19,9 +19,6 @@ function autoClick() {
 }
 
 function autoPurchaseUpgrades() {
-  // Set buying amount to 10 per purchase
-  $('#storeBulk10').click();
-
   // Look for upgrades being available
   let availableUpgrades = $('#upgrades > .upgrade.enabled');
   if (availableUpgrades.length > 0) {
@@ -31,13 +28,15 @@ function autoPurchaseUpgrades() {
   }
 
   // Get the top enabled purchase to be made
-  let topPurchase = $('.product.unlocked').last();
-  if (topPurchase.hasClass('enabled')) {
-    debug("Auto-Buying: " + topPurchase.find('.title').text());
+  let topPurchase = $('.product.unlocked.enabled').last();
+  let topPurchaseCount = 0;
+  if (topPurchase.find('.owned').text() != "") {
+    topPurchaseCount = parseInt(topPurchase.find('.owned').text());
+  }
+  if (topPurchaseCount < 50) {
+    debug("Auto-Buying: " + topPurchase.find('.title:first').text());
     topPurchase.click();
-    toastr.info('Purchased ' + topPurchase.find('.title').text() + ' for you.');
-  } else {
-    debug("Not enough money to buy top purchase: " + topPurchase.find('.title').text() + " (need " + topPurchase.find('.price').text() + " cookies)");
+    toastr.info('Purchased ' + topPurchase.find('.title:first').text() + ' for you.');
   }
 }
 
@@ -73,7 +72,7 @@ function debug(msg) {
   }
 
   // Enable automatic purchasing of upgrades / elements
-  window.autoPurchase = window.setInterval(autoPurchaseUpgrades, 10000);
+  window.autoPurchase = window.setInterval(autoPurchaseUpgrades, 500);
 
   // Startup notification
   let version = GM_info.script.version;
