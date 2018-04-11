@@ -8,7 +8,7 @@
 // @match         http://orteil.dashnet.org/cookieclicker/
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
-// @updateURL     https://github.com/Luzifer/automate-cookie-clicker/raw/master/autocookieclicker.user.js
+// @updateURL     https://raw.githubusercontent.com/Luzifer/automate-cookie-clicker/master/autocookieclicker.user.js
 // @grant         GM_info
 // @grant         GM_addStyle
 // ==/UserScript==
