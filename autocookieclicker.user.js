@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.6.0
+// @version       0.6.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -67,13 +67,7 @@ function getMaxBuy() {
     topPurchaseCount = parseInt(topPurchaseTextCount);
   }
 
-  var max = Math.max(Math.ceil(topPurchaseCount / 50), 1) * 50;
-  if (topPurchaseCount == max) {
-    // Special case: Cap was already bought
-    max += 50;
-  }
-
-  return max;
+  return Math.max(Math.ceil((topPurchaseCount + 1) / 50), 1) * 50;
 }
 
 (function() {
