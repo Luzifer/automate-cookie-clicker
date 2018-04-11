@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.6.1
+// @version       0.6.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -13,6 +13,8 @@
 // ==/UserScript==
 
 GM_addStyle('@import url("https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css");');
+
+var purchaseSteps = 50;
 
 function autoClick() {
   $('#bigCookie').click();
@@ -67,7 +69,7 @@ function getMaxBuy() {
     topPurchaseCount = parseInt(topPurchaseTextCount);
   }
 
-  return Math.max(Math.ceil((topPurchaseCount + 1) / 50), 1) * 50;
+  return Math.max(Math.ceil((topPurchaseCount + 1) / purchaseSteps), 1) * purchaseSteps;
 }
 
 (function() {
