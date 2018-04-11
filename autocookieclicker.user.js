@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.6.3
+// @version       0.6.4
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
+// @source        https://github.com/Luzifer/automate-cookie-clicker
 // @match         http://orteil.dashnet.org/cookieclicker/
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js
