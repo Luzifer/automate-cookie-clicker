@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.5.2
+// @version       0.6.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @match         http://orteil.dashnet.org/cookieclicker/
@@ -34,7 +34,7 @@ function autoPurchaseUpgrades() {
     if (topPurchase.find('.owned').text() != "") {
       topPurchaseCount = parseInt(topPurchase.find('.owned').text());
     }
-    if (topPurchaseCount < 50) {
+    if (topPurchaseCount < getMaxBuy()) {
       debug("Auto-Buying: " + topPurchase.find('.title:first').text());
       topPurchase.click();
       toastr.info('Purchased ' + topPurchase.find('.title:first').text() + ' for you.');
@@ -58,6 +58,22 @@ function checkCPS() {
 
 function debug(msg) {
   console.log("[AutoCookieClicker] " + msg);
+}
+
+function getMaxBuy() {
+  var topPurchaseCount = 0;
+  var topPurchaseTextCount = $('#product14').find('.owned').text();
+  if (topPurchaseTextCount != "") {
+    topPurchaseCount = parseInt(topPurchaseTextCount);
+  }
+
+  var max = Math.max(Math.ceil(topPurchaseCount / 50), 1) * 50;
+  if (topPurchaseCount == max) {
+    // Special case: Cap was already bought
+    max += 50;
+  }
+
+  return max;
 }
 
 (function() {
