@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.11.1
+// @version       0.11.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -41,7 +41,7 @@ function executeAutoActions() {
     let product = $(availableProducts[availableProducts.length - 1]);
 
     debug("Auto-Buying: " + product.find('.title:first').text());
-    topPurchase.click();
+    product.click();
     note('Purchased ' + product.find('.title:first').text() + ' for you.');
   }
 }
