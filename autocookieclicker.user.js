@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.10.0
+// @version       0.11.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -36,17 +36,13 @@ function executeAutoActions() {
   }
 
   // Get the top enabled purchase to be made
-  if ($('.product.unlocked.enabled').length > 0) {
-    let topPurchase = $('.product.unlocked.enabled').last();
-    let topPurchaseCount = 0;
-    if (topPurchase.find('.owned').text() != "") {
-      topPurchaseCount = parseInt(topPurchase.find('.owned').text());
-    }
-    if (topPurchaseCount < getMaxBuy()) {
-      debug("Auto-Buying: " + topPurchase.find('.title:first').text());
-      topPurchase.click();
-      note('Purchased ' + topPurchase.find('.title:first').text() + ' for you.');
-    }
+  let availableProducts = $('.product.unlocked.enabled').filter(productFilter);
+  if (availableProducts.length > 0) {
+    let product = availableProducts[availableProducts.length - 1];
+
+    debug("Auto-Buying: " + product.find('.title:first').text());
+    topPurchase.click();
+    note('Purchased ' + product.find('.title:first').text() + ' for you.');
   }
 }
 
@@ -88,6 +84,11 @@ function installHelper() {
 function note(msg, quick = true) {
   // Icon: img/icons.png 0-based indices
   Game.Notify("Auto-CookieClicker", msg, [12, 0], quick, true);
+}
+
+function productFilter(idx) {
+  let owned = Game.ObjectsById[parseInt($(this).attr('id').replace(/^product/, ''))].amount;
+  return owned < getMaxBuy();
 }
 
 function upgradeFilter(idx) {
