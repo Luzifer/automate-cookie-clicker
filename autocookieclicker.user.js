@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.11.2
+// @version       0.11.3
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -37,7 +37,7 @@ function executeAutoActions() {
 
   // Get the top enabled purchase to be made
   let availableProducts = $('.product.unlocked.enabled').filter(productFilter);
-  if (availableProducts.length > 0) {
+  if (availableProducts.length > 0 && Game.buyMode == 1) { // buyMode 1 = buy, -1 = sell
     let product = $(availableProducts[availableProducts.length - 1]);
 
     debug("Auto-Buying: " + product.find('.title:first').text());
