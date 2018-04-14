@@ -25,7 +25,7 @@ function autoClick() {
   $('#bigCookie').click();
 }
 
-function autoPurchaseUpgrades() {
+function executeAutoActions() {
   // Look for upgrades being available
   let availableUpgrades = $('.upgrade.enabled').filter(upgradeFilter);
   if (availableUpgrades.length > 0) {
@@ -102,7 +102,7 @@ function getMaxBuy() {
   window.checkCPS = window.setInterval(checkCPS, 1000);
 
   // Enable automatic purchasing of upgrades / elements
-  window.autoPurchase = window.setInterval(autoPurchaseUpgrades, 500);
+  window.autoPurchase = window.setInterval(executeAutoActions, 500);
 
   // Startup notification
   let version = GM_info.script.version;
