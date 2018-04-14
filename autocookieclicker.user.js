@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.9.5
+// @version       0.10.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -69,11 +69,7 @@ function debug(msg) {
 }
 
 function getMaxBuy() {
-  var topPurchaseCount = 0;
-  var topPurchaseTextCount = $('#product14').find('.owned').text();
-  if (topPurchaseTextCount != "") {
-    topPurchaseCount = parseInt(topPurchaseTextCount);
-  }
+  let topPurchaseCount = Game.ObjectsById[Game.ObjectsN - 1].amount;
 
   return Math.max(Math.ceil((topPurchaseCount + 1) / purchaseSteps), 1) * purchaseSteps;
 }
