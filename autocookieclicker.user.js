@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.7.1
+// @version       0.7.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -109,6 +109,10 @@ function getMaxBuy() {
 })();
 
 function upgradeFilter(idx) {
-  var upgradeID = parseInt($(this).attr('onclick').replace(/^.*\[([0-9]+)\].*$/, "$1"))
+  var onClickHandler = $(this).attr('onclick');
+  if onClickHandler == null {
+    return false;
+  }
+  var upgradeID = parseInt(onClickHandler.replace(/^.*\[([0-9]+)\].*$/, "$1"))
   return !blockingUpgrades.includes(upgradeID);
 }
