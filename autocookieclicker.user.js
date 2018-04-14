@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.9.0
+// @version       0.9.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -79,7 +79,8 @@ function getMaxBuy() {
 }
 
 func note(msg, quick = true) {
-  Game.Note("Auto-CookieClicker", msg, undefined, quick);
+  // Icon: img/icons.png 0-based indices
+  Game.Note("Auto-CookieClicker", msg, [12, 0], quick);
 }
 
 function upgradeFilter(idx) {
@@ -99,7 +100,9 @@ function upgradeFilter(idx) {
   // Enable automatic purchasing of upgrades / elements
   window.autoPurchase = window.setInterval(executeAutoActions, 500);
 
-  // Startup notification
-  let version = GM_info.script.version;
-  note('Version ' + version + ' loaded.');
+  window.setTimeout(func() {
+    // Startup notification
+    let version = GM_info.script.version;
+    note('Version ' + version + ' loaded.');
+  }, 1000);
 })();
