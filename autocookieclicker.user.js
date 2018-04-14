@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.8.0
+// @version       0.8.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -17,6 +17,7 @@ GM_addStyle('@import url("https://cdnjs.cloudflare.com/ajax/libs/toastr.js/lates
 
 var blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
+  85, // Revoke elders covenant
   333, // Milk selector
 ];
 var purchaseSteps = 50;
