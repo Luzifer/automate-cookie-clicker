@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.8.1
+// @version       0.8.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -54,12 +54,12 @@ function executeAutoActions() {
 }
 
 function checkCPS() {
-  let cps = parseInt($('#cookies').children('div').text().split(': ')[1]);
-  if (cps == 0) {
+  let cps = Game.cookiesPs;
+  if (cps < 3000) {
     if (window.autoClicker == undefined) {
       window.autoClicker = window.setInterval(autoClick, 1);
     }
-  } else if (cps > 3000) {
+  } else {
     if (window.autoClicker != undefined) {
       window.clearInterval(window.autoClicker);
       window.autoClicker = undefined;
