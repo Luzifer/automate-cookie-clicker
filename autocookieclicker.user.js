@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.6.4
+// @version       0.7.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -15,6 +15,7 @@
 
 GM_addStyle('@import url("https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css");');
 
+var blockingUpgrades = [];
 var purchaseSteps = 50;
 
 function autoClick() {
@@ -23,7 +24,7 @@ function autoClick() {
 
 function autoPurchaseUpgrades() {
   // Look for upgrades being available
-  let availableUpgrades = $('#upgrades > .upgrade.enabled');
+  let availableUpgrades = $('.upgrade.enabled').filter(upgradeFilter);
   if (availableUpgrades.length > 0) {
     debug(availableUpgrades.length + " upgrades available, buying now...");
     availableUpgrades.click();
@@ -104,3 +105,8 @@ function getMaxBuy() {
   let version = GM_info.script.version;
   toastr.info('Auto-CookieClicker ' + version + ' loaded.');
 })();
+
+function upgradeFilter(idx) {
+  var upgradeID = parseInt($(this).attr('onclick').replace(/^.*\[([0-9]+)\].*$/, "$1"))
+  return !blockingUpgrades.includes(upgradeID);
+}
