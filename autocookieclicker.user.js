@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.9.3
+// @version       0.9.4
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -91,7 +91,7 @@ function installHelper() {
 
 function note(msg, quick = true) {
   // Icon: img/icons.png 0-based indices
-  Game.Notify("Auto-CookieClicker", msg, [12, 0], quick);
+  Game.Notify("Auto-CookieClicker", msg, [12, 0], quick, false);
 }
 
 function upgradeFilter(idx) {
