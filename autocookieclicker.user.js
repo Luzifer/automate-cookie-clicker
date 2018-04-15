@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.11.3
+// @version       0.11.4
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
 // @match         http://orteil.dashnet.org/cookieclicker/
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @updateURL     https://raw.githubusercontent.com/Luzifer/automate-cookie-clicker/master/autocookieclicker.user.js
+// @icon          http://orteil.dashnet.org/cookieclicker/img/favicon.ico
 // @grant         GM_info
 // @grant         GM_addStyle
 // ==/UserScript==
