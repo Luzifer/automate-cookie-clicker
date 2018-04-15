@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.12.0
+// @version       0.13.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -52,11 +52,11 @@ function executeAutoActions() {
   }
 }
 
-function checkCPS() {
+function controlAutoClicker() {
   let cps = Game.cookiesPs;
-  if (cps < 3000) {
+  if (cps < 3000 || hasActiveClickBuff()) {
     if (window.autoClicker == undefined) {
-      window.autoClicker = window.setInterval(autoClick, 1);
+      window.autoClicker = window.setInterval(autoClick, 100);
     }
   } else {
     if (window.autoClicker != undefined) {
@@ -76,12 +76,20 @@ function getMaxBuy() {
   return Math.max(Math.ceil((topPurchaseCount + 1) / purchaseSteps), 1) * purchaseSteps;
 }
 
+function hasActiveClickBuff() {
+  var hasBuff = false;
+  for (key in Game.buffs) {
+    if (Game.buffs[key].multClick) hasBuff = true;
+  }
+  return hasBuff;
+}
+
 function installHelper() {
   // Startup notification
   let version = GM_info.script.version;
   note('Version ' + version + ' loaded.');
 
-  window.checkCPS = window.setInterval(checkCPS, 1000);
+  window.controlAutoClicker = window.setInterval(controlAutoClicker, 1000);
 
   // Enable automatic purchasing of upgrades / elements
   window.autoPurchase = window.setInterval(executeAutoActions, 500);
