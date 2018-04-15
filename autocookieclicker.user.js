@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.11.4
+// @version       0.12.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -27,6 +27,11 @@ function autoClick() {
 function executeAutoActions() {
   // Click all golden cookies
   $('.shimmer').click();
+
+  // Harvest sugar lumps
+  if ((new Date() - Game.lumpT) > Game.lumpRipeAge) {
+    Game.harvestLumps(1);
+  }
 
   // Look for upgrades being available
   let availableUpgrades = $('.upgrade.enabled').filter(upgradeFilter);
