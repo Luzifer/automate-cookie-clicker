@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.13.1
+// @version       0.13.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -16,8 +16,9 @@
 var blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
   85, // Revoke elders covenant
-  331, // Wallpaper selector
+  331, // Golden switch
   333, // Milk selector
+  414, // Background selector
 ];
 var purchaseSteps = 50;
 
