@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.16.1
+// @version       0.16.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -10,28 +10,29 @@
 // @updateURL     https://raw.githubusercontent.com/Luzifer/automate-cookie-clicker/master/autocookieclicker.user.js
 // @icon          http://orteil.dashnet.org/cookieclicker/img/favicon.ico
 // @grant         GM_info
-// @grant         GM_addStyle
 // ==/UserScript==
 
-var blockingUpgrades = [
+/* global Game:galse, GM_info:false, $:false */
+
+let blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
   85, // Revoke elders covenant
   331, // Golden switch
   333, // Milk selector
   414, // Background selector
 ];
-var dragonAuras = [
+let dragonAuras = [
   10, // Golden cookies may trigger a Dragonflight.
   15, // All cookie production multiplied by 2.
 ];
-var purchaseSteps = 50;
+let purchaseSteps = 50;
 
 function autoClick() {
   $('#bigCookie').click();
 }
 
 function executeAutoActions() {
-  if (Game.T % (Game.fps * 0.5) != 0) {
+  if (Game.T % (Game.fps * 0.5) !== 0) {
     // Game logic ticks very fast, only trigger every 0.5s
     return;
   }
@@ -47,17 +48,15 @@ function executeAutoActions() {
   // Look for upgrades being available
   let availableUpgrades = $('.upgrade.enabled').filter(upgradeFilter);
   if (availableUpgrades.length > 0) {
-    debug(availableUpgrades.length + " upgrades available, buying now...");
     availableUpgrades.click();
     note('Purchased ' + availableUpgrades.length + ' upgrades for you.');
   }
 
   // Get the top enabled purchase to be made
   let availableProducts = $('.product.unlocked.enabled').filter(productFilter);
-  if (availableProducts.length > 0 && Game.buyMode == 1) { // buyMode 1 = buy, -1 = sell
+  if (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
     let product = $(availableProducts[availableProducts.length - 1]);
 
-    debug("Auto-Buying: " + product.find('.title:first').text());
     product.click();
     note('Purchased ' + product.find('.title:first').text() + ' for you.');
   }
@@ -68,19 +67,15 @@ function executeAutoActions() {
 function controlAutoClicker() {
   let cps = Game.cookiesPs;
   if (cps < 3000 || hasActiveClickBuff()) {
-    if (window.autoClicker == undefined) {
+    if (window.autoClicker === undefined) {
       window.autoClicker = window.setInterval(autoClick, 100);
     }
   } else {
-    if (window.autoClicker != undefined) {
+    if (window.autoClicker !== undefined) {
       window.clearInterval(window.autoClicker);
       window.autoClicker = undefined;
     }
   }
-}
-
-function debug(msg) {
-  console.log("[AutoCookieClicker] " + msg);
 }
 
 function getMaxBuy() {
@@ -90,8 +85,8 @@ function getMaxBuy() {
 }
 
 function hasActiveClickBuff() {
-  var hasBuff = false;
-  for (var key in Game.buffs) {
+  let hasBuff = false;
+  for (let key in Game.buffs) {
     if (Game.buffs[key].multClick) hasBuff = true;
   }
   return hasBuff;
@@ -109,36 +104,36 @@ function installHelper() {
 function manageDragon() {
   // Upgrade dragon if possible
   if (Game.dragonLevels[Game.dragonLevel].cost() && Game.dragonLevel < Game.dragonLevels.length - 1) {
-    Game.UpgradeDragon()
+    Game.UpgradeDragon();
   }
 
   // Select first dragon aura
-  if (Game.dragonAura != dragonAuras[0] && Game.dragonLevel >= dragonAuras[0] + 4 && Game.SelectingDragonAura != dragonAura[0]) {
+  if (Game.dragonAura !== dragonAuras[0] && Game.dragonLevel >= dragonAuras[0] + 4 && Game.SelectingDragonAura !== dragonAuras[0]) {
     Game.SetDragonAura(dragonAuras[0], 0);
   }
 
   // Select second dragon aura
-  if (Game.dragonAura2 != dragonAuras[1] && Game.dragonLevel >= 22 && Game.SelectingDragonAura != dragonAura[1]) {
+  if (Game.dragonAura2 !== dragonAuras[1] && Game.dragonLevel >= 22 && Game.SelectingDragonAura !== dragonAuras[1]) {
     Game.SetDragonAura(dragonAuras[1], 1);
   }
 }
 
 function note(msg, quick = true) {
   // Icon: img/icons.png 0-based indices
-  Game.Notify("Auto-CookieClicker", msg, [12, 0], quick, true);
+  Game.Notify('Auto-CookieClicker', msg, [12, 0], quick, true);
 }
 
-function productFilter(idx) {
+function productFilter() {
   let owned = Game.ObjectsById[parseInt($(this).attr('id').replace(/^product/, ''))].amount;
   return owned < getMaxBuy();
 }
 
-function upgradeFilter(idx) {
-  var onClickHandler = $(this).attr('onclick');
+function upgradeFilter() {
+  let onClickHandler = $(this).attr('onclick');
   if (onClickHandler == null) {
     return false;
   }
-  var upgradeID = parseInt(onClickHandler.replace(/^.*\[([0-9]+)\].*$/, "$1"));
+  let upgradeID = parseInt(onClickHandler.replace(/^.*\[([0-9]+)\].*$/, '$1'));
   return !blockingUpgrades.includes(upgradeID);
 }
 
