@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.14.1
+// @version       0.15.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -19,6 +19,10 @@ var blockingUpgrades = [
   331, // Golden switch
   333, // Milk selector
   414, // Background selector
+];
+var dragonAuras = [
+  10, // Golden cookies may trigger a Dragonflight.
+  15, // All cookie production multiplied by 2.
 ];
 var purchaseSteps = 50;
 
@@ -53,10 +57,7 @@ function executeAutoActions() {
     note('Purchased ' + product.find('.title:first').text() + ' for you.');
   }
 
-  // Upgrade dragon if possible
-  if (Game.dragonLevels[Game.dragonLevel].cost()) {
-    Game.UpgradeDragon()
-  }
+  manageDragon();
 }
 
 function controlAutoClicker() {
@@ -100,6 +101,23 @@ function installHelper() {
 
   // Enable automatic purchasing of upgrades / elements
   window.autoPurchase = window.setInterval(executeAutoActions, 500);
+}
+
+function manageDragon() {
+  // Upgrade dragon if possible
+  if (Game.dragonLevels[Game.dragonLevel].cost()) {
+    Game.UpgradeDragon()
+  }
+
+  // Select first dragon aura
+  if (Game.dragonAura != dragonAuras[0] && Game.dragonLevel >= dragonAuras[0] + 4 && Game.SelectingDragonAura != dragonAura[0]) {
+    Game.SetDragonAura(dragonAuras[0], 0);
+  }
+
+  // Select second dragon aura
+  if (Game.dragonAura2 != dragonAuras[1] && Game.dragonLevel >= 22 && Game.SelectingDragonAura != dragonAura[1]) {
+    Game.SetDragonAura(dragonAuras[1], 1);
+  }
 }
 
 function note(msg, quick = true) {
