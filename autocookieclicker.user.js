@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.15.0
+// @version       0.15.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -105,7 +105,7 @@ function installHelper() {
 
 function manageDragon() {
   // Upgrade dragon if possible
-  if (Game.dragonLevels[Game.dragonLevel].cost()) {
+  if (Game.dragonLevels[Game.dragonLevel].cost() && Game.dragonLevel < Game.dragonLevels.length - 1) {
     Game.UpgradeDragon()
   }
 
