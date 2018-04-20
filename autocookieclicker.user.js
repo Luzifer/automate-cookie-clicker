@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.16.2
+// @version       0.17.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -53,12 +53,19 @@ function executeAutoActions() {
   }
 
   // Get the top enabled purchase to be made
-  let availableProducts = $('.product.unlocked.enabled').filter(productFilter);
-  if (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
-    let product = $(availableProducts[availableProducts.length - 1]);
+  let availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < purchaseSteps);
+  while (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
+    let product = availableProducts[availableProducts.length - 1];
 
-    product.click();
-    note('Purchased ' + product.find('.title:first').text() + ' for you.');
+    let buyAmount = 0;
+    for (buyAmount = purchaseSteps - product.amount; buyAmount > 0; buyAmount--) {
+      if (product.getSumPrice(buyAmount) <= Game.cookies) {
+        break;
+      }
+    }
+
+    product.buy(buyAmount);
+    availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < purchaseSteps);
   }
 
   manageDragon();
@@ -76,12 +83,6 @@ function controlAutoClicker() {
       window.autoClicker = undefined;
     }
   }
-}
-
-function getMaxBuy() {
-  let topPurchaseCount = Game.ObjectsById[Game.ObjectsN - 1].amount;
-
-  return Math.max(Math.ceil((topPurchaseCount + 1) / purchaseSteps), 1) * purchaseSteps;
 }
 
 function hasActiveClickBuff() {
@@ -121,11 +122,6 @@ function manageDragon() {
 function note(msg, quick = true) {
   // Icon: img/icons.png 0-based indices
   Game.Notify('Auto-CookieClicker', msg, [12, 0], quick, true);
-}
-
-function productFilter() {
-  let owned = Game.ObjectsById[parseInt($(this).attr('id').replace(/^product/, ''))].amount;
-  return owned < getMaxBuy();
 }
 
 function upgradeFilter() {
