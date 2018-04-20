@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.17.4
+// @version       0.18.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -35,6 +35,11 @@ function executeAutoActions() {
 
   // Click all golden cookies
   $('.shimmer').click();
+
+  // Get rid of wrinklers
+  while (Game.wrinklers.filter(obj => obj.hp > 0 && obj.phase > 0).length > 0) {
+    Game.PopRandomWrinkler();
+  }
 
   // Harvest sugar lumps
   if ((new Date() - Game.lumpT) > Game.lumpRipeAge) {
