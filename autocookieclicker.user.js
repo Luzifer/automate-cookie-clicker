@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.17.1
+// @version       0.17.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -20,10 +20,6 @@ let blockingUpgrades = [
   331, // Golden switch
   333, // Milk selector
   414, // Background selector
-];
-let dragonAuras = [
-  10, // Golden cookies may trigger a Dragonflight.
-  15, // All cookie production multiplied by 2.
 ];
 let purchaseSteps = 50;
 
@@ -57,14 +53,13 @@ function executeAutoActions() {
   while (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
     let product = availableProducts[availableProducts.length - 1];
 
-    let buyAmount = 0;
-    for (buyAmount = purchaseSteps - product.amount; buyAmount > 0; buyAmount--) {
+    for (let buyAmount = getMaxBuy() - product.amount; buyAmount > 0; buyAmount--) {
       if (product.getSumPrice(buyAmount) <= Game.cookies) {
+        product.buy(buyAmount);
         break;
       }
     }
 
-    product.buy(buyAmount);
     availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < getMaxBuy());
   }
 
@@ -114,15 +109,8 @@ function manageDragon() {
     Game.UpgradeDragon();
   }
 
-  // Select first dragon aura
-  if (Game.dragonAura !== dragonAuras[0] && Game.dragonLevel >= dragonAuras[0] + 4 && Game.SelectingDragonAura !== dragonAuras[0]) {
-    Game.SetDragonAura(dragonAuras[0], 0);
-  }
-
-  // Select second dragon aura
-  if (Game.dragonAura2 !== dragonAuras[1] && Game.dragonLevel >= 22 && Game.SelectingDragonAura !== dragonAuras[1]) {
-    Game.SetDragonAura(dragonAuras[1], 1);
-  }
+  // Choosing dragon aura is currently not possible :(
+  // This will just open a select dialogue...
 }
 
 function note(msg, quick = true) {
