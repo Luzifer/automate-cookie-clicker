@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.15.1
+// @version       0.16.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -97,10 +97,8 @@ function installHelper() {
   let version = GM_info.script.version;
   note('Version ' + version + ' loaded.');
 
-  window.controlAutoClicker = window.setInterval(controlAutoClicker, 1000);
-
-  // Enable automatic purchasing of upgrades / elements
-  window.autoPurchase = window.setInterval(executeAutoActions, 500);
+  Game.customChecks.push(controlAutoClicker);
+  Game.customLogic.push(executeAutoActions);
 }
 
 function manageDragon() {
