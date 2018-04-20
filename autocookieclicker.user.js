@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.16.0
+// @version       0.16.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -31,6 +31,11 @@ function autoClick() {
 }
 
 function executeAutoActions() {
+  if (Game.T % (Game.fps * 0.5) != 0) {
+    // Game logic ticks very fast, only trigger every 0.5s
+    return;
+  }
+
   // Click all golden cookies
   $('.shimmer').click();
 
