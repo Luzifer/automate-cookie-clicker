@@ -91,7 +91,7 @@ function getMaxBuy() {
 
 function hasActiveClickBuff() {
   var hasBuff = false;
-  for (key in Game.buffs) {
+  for (var key in Game.buffs) {
     if (Game.buffs[key].multClick) hasBuff = true;
   }
   return hasBuff;
