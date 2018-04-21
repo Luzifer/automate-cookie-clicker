@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.19.0
+// @version       0.19.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -46,7 +46,7 @@ function executeAutoActions() {
   while (availableUpgrades.length > 0) {
     let upgrade = availableUpgrades[0];
     upgrade.buy();
-    note('Purchased upgrade ' + upgrade.name + ' for you.');
+    note(`Purchased upgrade ${upgrade.name} for you.`);
 
     availableUpgrades = Game.UpgradesInStore.filter(obj => obj.canBuy() && !blockingUpgrades.includes(obj.id));
   }
@@ -59,7 +59,7 @@ function executeAutoActions() {
     for (let buyAmount = getMaxBuy() - product.amount; buyAmount > 0; buyAmount--) {
       if (product.getSumPrice(buyAmount) <= Game.cookies) {
         product.buy(buyAmount);
-        note('Purchased ' + buyAmount + ' ' + (buyAmount === 1 ? product.name : product.plural) + ' for you.');
+        note(`Purchased ${buyAmount} ${buyAmount === 1 ? product.name : product.plural} for you.`);
         break;
       }
     }
@@ -101,7 +101,7 @@ function hasActiveClickBuff() {
 function installHelper() {
   // Startup notification
   let version = GM_info.script.version;
-  note('Version ' + version + ' loaded.');
+  note(`Version ${version} loaded.`);
 
   // Do not click toggle upgrades
   blockingUpgrades = blockingUpgrades.concat(Game.UpgradesByPool['toggle'].map(obj => obj.id));
@@ -125,8 +125,4 @@ function note(msg, quick = true) {
   Game.Notify('Auto-CookieClicker', msg, [12, 0], quick, true);
 }
 
-(function() {
-  'use strict';
-
-  window.setTimeout(installHelper, 1000);
-})();
+(() => window.setTimeout(installHelper, 1000))();
