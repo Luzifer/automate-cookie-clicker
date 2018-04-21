@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.18.3
+// @version       0.18.4
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -48,6 +48,8 @@ function executeAutoActions() {
     let upgrade = availableUpgrades[0];
     upgrade.buy();
     note('Purchased upgrade ' + upgrade.name + ' for you.');
+
+    availableUpgrades = Game.UpgradesInStore.filter(obj => obj.canBuy() && !blockingUpgrades.includes(obj.id));
   }
 
   // Get the top enabled purchase to be made
