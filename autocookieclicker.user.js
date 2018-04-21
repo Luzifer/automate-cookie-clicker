@@ -1,18 +1,17 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.18.4
+// @version       0.19.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
 // @match         http://orteil.dashnet.org/cookieclicker/
-// @require       https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @updateURL     https://raw.githubusercontent.com/Luzifer/automate-cookie-clicker/master/autocookieclicker.user.js
 // @icon          http://orteil.dashnet.org/cookieclicker/img/favicon.ico
 // @grant         GM_info
 // ==/UserScript==
 
-/* global Game:galse, GM_info:false, $:false */
+/* global Game:false, GM_info:false */
 
 let blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
@@ -20,7 +19,7 @@ let blockingUpgrades = [
 let purchaseSteps = 50;
 
 function autoClick() {
-  $('#bigCookie').click();
+  Game.ClickCookie();
 }
 
 function executeAutoActions() {
@@ -30,7 +29,7 @@ function executeAutoActions() {
   }
 
   // Click all golden cookies
-  $('.shimmer').click();
+  Game.shimmers.forEach(obj => obj.pop());
 
   // Get rid of wrinklers
   while (Game.wrinklers.filter(obj => obj.hp > 0 && obj.phase > 0).length > 0) {
