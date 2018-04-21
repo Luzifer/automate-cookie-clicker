@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.18.1
+// @version       0.18.2
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -16,11 +16,6 @@
 
 let blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
-  85, // Revoke elders covenant
-  182, 183, 184, 185, 209, // Season switchers
-  331, // Golden switch
-  333, // Milk selector
-  414, // Background selector
 ];
 let purchaseSteps = 50;
 
@@ -105,6 +100,9 @@ function installHelper() {
   // Startup notification
   let version = GM_info.script.version;
   note('Version ' + version + ' loaded.');
+
+  // Do not click toggle upgrades
+  blockingUpgrades = blockingUpgrades.concat(Game.UpgradesByPool['toggle'].map(obj => obj.id));
 
   Game.customChecks.push(controlAutoClicker);
   Game.customLogic.push(executeAutoActions);
