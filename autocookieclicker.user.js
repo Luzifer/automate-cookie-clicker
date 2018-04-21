@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.18.2
+// @version       0.18.3
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -43,10 +43,11 @@ function executeAutoActions() {
   }
 
   // Look for upgrades being available
-  let availableUpgrades = $('.upgrade.enabled').filter(upgradeFilter);
-  if (availableUpgrades.length > 0) {
-    availableUpgrades.click();
-    note('Purchased ' + availableUpgrades.length + ' upgrades for you.');
+  let availableUpgrades = Game.UpgradesInStore.filter(obj => obj.canBuy() && !blockingUpgrades.includes(obj.id));
+  while (availableUpgrades.length > 0) {
+    let upgrade = availableUpgrades[0];
+    upgrade.buy();
+    note('Purchased upgrade ' + upgrade.name + ' for you.');
   }
 
   // Get the top enabled purchase to be made
@@ -121,15 +122,6 @@ function manageDragon() {
 function note(msg, quick = true) {
   // Icon: img/icons.png 0-based indices
   Game.Notify('Auto-CookieClicker', msg, [12, 0], quick, true);
-}
-
-function upgradeFilter() {
-  let onClickHandler = $(this).attr('onclick');
-  if (onClickHandler == null) {
-    return false;
-  }
-  let upgradeID = parseInt(onClickHandler.replace(/^.*\[([0-9]+)\].*$/, '$1'));
-  return !blockingUpgrades.includes(upgradeID);
 }
 
 (function() {
