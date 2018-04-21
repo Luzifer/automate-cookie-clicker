@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.18.0
+// @version       0.18.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -17,6 +17,7 @@
 let blockingUpgrades = [
   69, // Destructive upgrade: "One mind"
   85, // Revoke elders covenant
+  182, 183, 184, 185, 209, // Season switchers
   331, // Golden switch
   333, // Milk selector
   414, // Background selector
