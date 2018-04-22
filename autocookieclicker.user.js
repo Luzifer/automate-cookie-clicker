@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.19.2
+// @version       0.20.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -66,8 +66,6 @@ function executeAutoActions() {
 
     availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < getMaxBuy());
   }
-
-  manageDragon();
 }
 
 function controlAutoClicker() {
@@ -107,6 +105,9 @@ function installHelper() {
   blockingUpgrades = blockingUpgrades.concat(Game.UpgradesByPool['toggle'].map(obj => obj.id));
 
   Game.customChecks.push(controlAutoClicker);
+  Game.customChecks.push(manageDragon);
+  Game.customChecks.push(manageSanta);
+
   Game.customLogic.push(executeAutoActions);
 }
 
@@ -118,6 +119,11 @@ function manageDragon() {
 
   // Choosing dragon aura is currently not possible :(
   // This will just open a select dialogue...
+}
+
+function manageSanta() {
+  let moni = Math.pow(Game.santaLevel + 1, Game.santaLevel + 1);
+  if (Game.cookies > moni && Game.santaLevel < 14) Game.UpgradeSanta();
 }
 
 function note(msg, quick = true) {
