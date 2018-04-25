@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.20.0
+// @version       0.21.0
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -52,11 +52,11 @@ function executeAutoActions() {
   }
 
   // Get the top enabled purchase to be made
-  let availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < getMaxBuy());
+  let availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies);
   while (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
     let product = availableProducts[availableProducts.length - 1];
 
-    for (let buyAmount = getMaxBuy() - product.amount; buyAmount > 0; buyAmount--) {
+    for (let buyAmount = purchaseSteps - product.amount; buyAmount > 0; buyAmount--) {
       if (product.getSumPrice(buyAmount) <= Game.cookies) {
         product.buy(buyAmount);
         note(`Purchased ${buyAmount} ${buyAmount === 1 ? product.name : product.plural} for you.`);
@@ -64,7 +64,7 @@ function executeAutoActions() {
       }
     }
 
-    availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies && obj.amount < getMaxBuy());
+    availableProducts = Game.ObjectsById.filter(obj => obj.price < Game.cookies);
   }
 }
 
@@ -80,12 +80,6 @@ function controlAutoClicker() {
       window.autoClicker = undefined;
     }
   }
-}
-
-function getMaxBuy() {
-  let topPurchaseCount = Game.ObjectsById[Game.ObjectsN - 1].amount;
-
-  return Math.max(Math.ceil((topPurchaseCount + 1) / purchaseSteps), 1) * purchaseSteps;
 }
 
 function hasActiveClickBuff() {
