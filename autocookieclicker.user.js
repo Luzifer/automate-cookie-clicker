@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Automate CookieClicker
 // @namespace     https://luzifer.io/
-// @version       0.21.0
+// @version       0.21.1
 // @description   Automate everything!
 // @author        Knut Ahlers <knut@ahlers.me>
 // @source        https://github.com/Luzifer/automate-cookie-clicker
@@ -56,7 +56,7 @@ function executeAutoActions() {
   while (availableProducts.length > 0 && Game.buyMode === 1) { // buyMode 1 = buy, -1 = sell
     let product = availableProducts[availableProducts.length - 1];
 
-    for (let buyAmount = purchaseSteps - product.amount; buyAmount > 0; buyAmount--) {
+    for (let buyAmount = purchaseSteps; buyAmount > 0; buyAmount--) {
       if (product.getSumPrice(buyAmount) <= Game.cookies) {
         product.buy(buyAmount);
         note(`Purchased ${buyAmount} ${buyAmount === 1 ? product.name : product.plural} for you.`);
